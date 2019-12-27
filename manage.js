@@ -8,10 +8,8 @@ const { spawn } = require('child_process');
 const GLITCH_API = 'https://api.glitch.com';
 
 let args = process.argv.slice(2);
-console.log(args);
 const command = args[0];
 const CACHE_PATH = process.cwd() + '/cache.json';
-console.log(CACHE_PATH);
 let dataCache = {};
 
 if (args.indexOf('-u') > -1) {
