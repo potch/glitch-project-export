@@ -98,7 +98,7 @@ async function clone() {
   for (let project of projects) {
     num++;
     console.log(`cloning ${project} (${num}/${count})`);
-    let cwd = __dirname + '/' + project;
+    let cwd = process.cwd() + '/' + project;
     if (fs.existsSync(cwd)) {
       console.log('> project already cloned!')
     } else {
@@ -108,6 +108,10 @@ async function clone() {
 }
 
 async function update() {
+  if (!dataCache.login) {
+    dataCache.login = await ask('enter your Glitch username:');
+  }
+  writeCache();
   let projects = dataCache.projects;
   if (!projects) {
     projects = await buildProjectList();
@@ -125,7 +129,11 @@ async function update() {
       num++;
       console.log(`updating ${project} (${num}/${count})`);
       let cwd = process.cwd() + '/' + project;
-      return runCommand('git', ['pull'], cwd, project);
+      if (fs.existsSync(cwd)) {
+        return runCommand('git', ['pull'], cwd, project);
+      } else {
+        console.log('> project not found, try running export to download it?')
+      }
     }));
   }
 }
@@ -136,6 +144,10 @@ function runCommand(command, args, cwd, prefix = '') {
   
     cmd.stdout.on('data', (data) => {
       console.log(`${prefix}> ${data}`);
+    });
+
+    cmd.on('error', (error) => {
+      console.log(`${prefix}> Error: ${error}`);
     });
   
     cmd.stderr.on('data', (data) => {
