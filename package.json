@@ -9,6 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "homepage": "https://github.com/potch/glitch-project-export",
   "author": "Potch",
   "license": "ISC",
   "dependencies": {
