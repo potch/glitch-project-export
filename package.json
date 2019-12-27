@@ -1,0 +1,18 @@
+{
+  "name": "@potch/glitch-project-export",
+  "version": "1.0.0",
+  "description": "Export all Glitch projects locally using git and keep them up to date",
+  "main": "manage.js",
+  "bin": {
+    "glitch-project-export": "manage.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Potch",
+  "license": "ISC",
+  "dependencies": {
+    "fs-extra": "^8.1.0",
+    "node-fetch": "^2.6.0"
+  }
+}
