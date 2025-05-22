@@ -12,21 +12,27 @@ const command = args[0];
 const CACHE_PATH = process.cwd() + "/cache.json";
 let dataCache = {};
 
+let user;
+
 if (args.indexOf("-u") > -1) {
-  dataCache.login = args[args.indexOf("-u") + 1];
+  user = args[args.indexOf("-u") + 1];
 }
 
 async function buildProjectList() {
-  let login = dataCache.login;
+  if (!user) {
+    user = await ask("enter your Glitch username:");
+  }
   let projects = [];
   console.log("fetching projects...");
   let page = await fetch(
-    `${GLITCH_API}/v1/users/by/login/projects?limit=100&login=${login}`
+    `${GLITCH_API}/v1/users/by/login/projects?limit=100&login=${user}`
   ).then((r) => r.json());
+  console.log(page);
   projects.push(...page.items.map((project) => project.domain));
   while (page.hasMore) {
     console.log("fetching more projects...");
     page = await fetch(`${GLITCH_API}${page.nextPage}`).then((r) => r.json());
+    console.log(page);
     projects.push(...page.items.map((project) => project.domain));
   }
   return projects;
@@ -53,7 +59,7 @@ function usage() {
   console.log(`usage: glitch-project-export [command] [-u username]
   
 Available commands:
-  export: list all discovered projects'
+  list:   list all discovered projects
   export: exports all projects using 'git clone'
   update: updates all cloned projects using 'git pull'
 
@@ -89,10 +95,6 @@ function writeCache() {
 }
 
 async function clone() {
-  if (!dataCache.login) {
-    dataCache.login = await ask("enter your Glitch username:");
-  }
-  writeCache();
   let projects = await buildProjectList();
   dataCache.projects = projects;
   writeCache();
@@ -113,10 +115,6 @@ async function clone() {
 }
 
 async function list() {
-  if (!dataCache.login) {
-    dataCache.login = await ask("enter your Glitch username:");
-  }
-  writeCache();
   let projects = await buildProjectList();
   for (let project of projects) {
     console.log(project);
@@ -124,14 +122,12 @@ async function list() {
 }
 
 async function update() {
-  if (!dataCache.login) {
-    dataCache.login = await ask("enter your Glitch username:");
-  }
-  writeCache();
   let projects = dataCache.projects;
-  if (!projects) {
+  if (!projects || (user && user !== dataCache.login)) {
     projects = await buildProjectList();
-    fs.writeFileSync(CACHE_PATH, JSON.stringify(projects, null, 2));
+    dataCache.projects = projects;
+    dataCache.login = user;
+    writeCache();
   } else {
     console.log("using cached project list");
   }

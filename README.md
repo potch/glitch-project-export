@@ -14,6 +14,7 @@ Will write project exports to the current directory.
 usage: glitch-project-export [command] [-u username]
 
 Available commands:
+  list:   list add discovered projects
   export: exports all projects using 'git clone'
   update: updates all cloned projects using 'git pull'
 
