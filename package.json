@@ -1,6 +1,6 @@
 {
   "name": "@potch/glitch-project-export",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Export all public Glitch projects locally using git and keep them up to date",
   "main": "manage.js",
   "bin": {

@@ -27,12 +27,10 @@ async function buildProjectList() {
   let page = await fetch(
     `${GLITCH_API}/v1/users/by/login/projects?limit=100&login=${user}`
   ).then((r) => r.json());
-  console.log(page);
   projects.push(...page.items.map((project) => project.domain));
   while (page.hasMore) {
     console.log("fetching more projects...");
     page = await fetch(`${GLITCH_API}${page.nextPage}`).then((r) => r.json());
-    console.log(page);
     projects.push(...page.items.map((project) => project.domain));
   }
   return projects;
