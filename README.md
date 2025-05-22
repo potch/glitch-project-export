@@ -4,7 +4,14 @@ Exports all your _public_ Glitch projects and keeps them up-to-date.
 
 ## Install
 
-`npm i -g @potch/glitch-project-export`
+```sh
+npm i -g @potch/glitch-project-export
+glitch-project-expo
+```
+
+or
+
+`npx glitch-project-export`
 
 ## Usage
 
