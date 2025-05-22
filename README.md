@@ -6,7 +6,7 @@ Exports all your _public_ Glitch projects and keeps them up-to-date.
 
 ```sh
 npm i -g @potch/glitch-project-export
-glitch-project-expo
+glitch-project-export
 ```
 
 or
