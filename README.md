@@ -1,6 +1,6 @@
 # glitch-project-export
 
-Exports all your Glitch projects and keeps them up-to-date.
+Exports all your _public_ Glitch projects and keeps them up-to-date.
 
 ## Install
 
@@ -12,7 +12,7 @@ Will write project exports to the current directory.
 
 ```
 usage: glitch-project-export [command] [-u username]
-  
+
 Available commands:
   export: exports all projects using 'git clone'
   update: updates all cloned projects using 'git pull'
