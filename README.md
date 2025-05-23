@@ -11,7 +11,7 @@ glitch-project-export
 
 or
 
-`npx glitch-project-export`
+`npx @potch/glitch-project-export`
 
 ## Usage
 
